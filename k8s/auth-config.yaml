@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-service-config
+data:
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-service:5432/auth_db"
+  SPRING_DATASOURCE_USERNAME: "postgres"
+  FACE_SERVICE_URL: "http://face-service:8000"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: auth-service-secrets
+type: Opaque
+stringData:
+  SPRING_DATASOURCE_PASSWORD: "admin" # L'autre membre mettra le vrai
+  JWT_SECRET: "super-secret-key-for-production"
+  MAIL_USERNAME: "ton.email@gmail.com"
+  MAIL_PASSWORD: "ton-mot-de-passe-application"

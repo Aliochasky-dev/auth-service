@@ -1,0 +1,16 @@
+package cm.uy1.campusconnect.auth_service.exception;
+
+/** Business exception carrying a stable error code (see ErrorCode). */
+public class ApiException extends RuntimeException {
+
+    private final ErrorCode code;
+
+    public ApiException(ErrorCode code, String message) {
+        super(message);
+        this.code = code;
+    }
+
+    public ErrorCode getCode() {
+        return code;
+    }
+}

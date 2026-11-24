@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/auth_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:admin}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dev-only-secret-change-me-dev-only-secret-change-me}
+    access-token-ttl-seconds: 1800
+    refresh-token-ttl-seconds: 604800
+  biometric:
+    challenge-ttl-seconds: ${BIOMETRIC_CHALLENGE_TTL_SECONDS:600}
+    face-similarity-threshold: ${BIOMETRIC_FACE_THRESHOLD:0.65}
+    crypto:
+      key-v1-base64: "q3G7mP9kL2vX8wR5tY1uI4oA7sD0fG3hJ6kL9mN2bV8="
+      current-key-version: 1
+    fingerprint:
+      dev-mode-allow-unsigned: false
+    kit:
+      enabled: ${BIOMETRIC_KIT_ENABLED:false}
+      endpoint-url: ${BIOMETRIC_KIT_URL:}
+
+  # Configuration de l'Admin par défaut (AJOUTÉ ICI)
+  admin:
+    email: admin@campusconnect.cm
+    password: Admin123!
+    phone: "+237600000000"
+
+  verification:
+    mail-enabled: true
+    base-url: http://localhost:8080

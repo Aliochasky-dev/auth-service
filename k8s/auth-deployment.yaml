@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  labels:
+    app: auth-service
+spec:
+  replicas: 2 # On met 2 instances pour la haute disponibilité (scalabilité)
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - name: auth-service
+          image: <REMPLACER_PAR_IMAGE_DOCKER> # L'autre membre mettra l'URL de l'image
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: auth-service-secrets
+            - configMapRef:
+                name: auth-service-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  selector:
+    app: auth-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
